@@ -9,7 +9,7 @@ function Task() {
 
   const addTask = () => {
     if (input.trim() === "") {
-      setError("Please enter a task");
+      setError("Please enter a task !");
       return;
     }
     setError("");
@@ -32,13 +32,13 @@ function Task() {
 
   return (
     // ---functional UI code --
-    <div className="bg-white place-self-center w-11/12 max-w-md p-7 min-h-[550px] rounded-xl  shadow-lg flex flex-col ">
+    <div className="bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 place-self-center w-11/12 max-w-md p-7 min-h-[550px] rounded-xl shadow-lg flex flex-col">
       {/* --- title ---- */}
       <div className=" flex items-center mt-7 gap-2">
-        <h1 className="text-3xl font-semibold">Task Manager</h1>
+        <h1 className="text-3xl font-semibold text-white">Task Manager</h1>
       </div>
       {/* --- input box --- */}
-      <div className="flex items-center my-7 bg-gray-200 rounded-full">
+      <div className="flex items-center my-5   bg-white rounded-full shadow-md">
         <input
           type="text"
           value={input}
@@ -48,35 +48,41 @@ function Task() {
         />
         <button
           onClick={addTask}
-          className="border-none rounded-full bg-blue-600 w-32 h-14 text-white text-lg font-medium cursor-pointer"
+          className="border-none rounded-full bg-gradient-to-r from-blue-500 to-purple-600 w-32 h-14 text-white text-lg font-medium cursor-pointer hover:from-blue-600 hover:to-purple-700 transition-all"
         >
           Add +
         </button>
       </div>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
+      {error && <p className="text-red-500 mb-4   ">{error}</p>}
       {/* --- task-list --- */}
       <div>
         {tasks.map((task) => (
           <div
             key={task.id}
-            className="flex items-center justify-between bg-gray-100 p-4 mb-2 rounded-lg cursor-pointer"
-            onClick={() => toggleTask(task.id)}
+            className={`flex items-center justify-between p-4 mb-2 rounded-lg shadow-md transition-all ${
+              task.completed ? 'bg-green-100' : 'bg-white'
+            }`}
           >
             <span
               style={{ textDecoration: task.completed ? 'line-through' : 'none' }}
-              className="flex-1"
+              className="flex-1 text-gray-800"
             >
               {task.text}
             </span>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                removeTask(task.id);
-              }}
-              className="text-red-500 text-xl ml-2"
-            >
-              ❌  
-            </button>
+            <div className="flex gap-2">
+              <button
+                onClick={() => toggleTask(task.id)}
+                className="text-green-600 text-xl hover:text-green-800 transition-colors"
+              >
+                ✓
+              </button>
+              <button
+                onClick={() => removeTask(task.id)}
+                className="text-red-600 text-xl hover:text-red-800 transition-colors"
+              >
+                ✗
+              </button>
+            </div>
           </div>
         ))}
       </div>
